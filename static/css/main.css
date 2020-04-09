@@ -1,0 +1,228 @@
+body{
+  background-color: #E0E0E0;
+  height: 125vh;
+  margin-top: 80px;
+  font-family: sans-serif;
+}
+
+.logo img{
+  height: 80px;
+  margin-left: 40px;
+}
+
+header *{
+  display:inline-block;
+}
+
+header li {
+    display: inline-block;
+
+    padding: 30px 20px 29px;
+
+}
+
+header li a {
+  color: black;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2em;
+}
+
+header{
+  display:flex;
+  align-items: center;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  left:0;
+  right:0;
+  height:80px;
+  padding-bottom: 4px;
+  box-shadow: 0 0 25px 0 black;
+}
+
+header li:hover{
+  background-color: #f2f2f2;
+}
+
+header li:hover a{
+    font-size: 1.21em;
+}
+
+header li:last-child{
+    padding: 0px 20px 0px;
+}
+
+.bodi {
+  margin-top: 100px;
+  padding-top: 10px;
+}
+
+.container{
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3), 0 17px 17px 0 rgba(0, 0, 0, 0.15);
+  min-height: 100vh;
+}
+
+.myform{
+  padding:5px;
+  margin:5% auto 0 auto;
+  margin-top: 20px;
+  width: 50%;
+}
+
+.mybutton{
+  font-family: 'Raleway', sans-serif;
+  color: #494949 !important;
+  background: #ffffff;
+  padding: 15px;
+  margin: 20px 0 20px 0;
+  text-align: center;
+  border: 2px solid #494949 !important;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.mybutton:hover{
+  color: #ffffff !important;
+  background: #27ae60;
+  border-color: #27ae60 !important;
+  transition: all 0.4s ease 0s;
+}
+
+.mybutton_container{
+  text-align: center;
+}
+
+.form-title {
+  font-family: 'Raleway', sans-serif;
+  width:50%;
+  margin: 1px auto 0 auto;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  font-size: 20px;
+  background: #27ae60;
+  border-radius: 10px 10px 0 0;
+}
+
+/* BEGIN POST STYLES */
+
+.user-info-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.avatar{
+  flex: 1 1 0;
+  height: 40px;
+  width: 40px;
+  border: 1px solid rgb(232, 232, 232);
+  object-fit: cover;
+  margin: 14px 8px 1px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.avatar-user_stream{
+  flex: 1 1 0;
+  height: 40px;
+  width: 40px;
+  border: 1px solid rgb(232, 232, 232);
+  object-fit: cover;
+  margin: 23px 8px 1px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.username-and-time-container{
+  height: 40px;
+}
+
+.username{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.username a{
+  font-family: "Open Sans", Sans-Serif, serif;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 2px 0 0;
+  color: #000;
+}
+
+.time{
+  font-family: "Open Sans", Sans-Serif, serif;
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  margin: auto;
+  padding-top: 4px;
+}
+
+.post{
+  font-family: "Open Sans", Sans-Serif, serif;
+  white-space: pre-wrap;
+  margin: auto 14px 14px;
+  font-size: 16px;
+  color: rgb(36, 36, 36);
+}
+
+h4 {
+  font-size: 16px;
+      display: inline-block;
+    width: 200px;
+  height: 30px;
+  padding-top: 5px;
+    background: #27ae60;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+}
+
+/*PRIVATE*/
+.grid-100{
+    display: inline-block;
+  float: left;
+  width: 100%;
+}
+.grid-50{
+    display: inline-block;
+  float: left;
+  width: 49%;
+}
+.grid-33{
+    display: inline-block;
+  float: left;
+  width: 33%;
+}
+.grid-25{
+    display: inline-block;
+  float: right;
+  width: 20%;
+  margin: 0 2.25%;
+}
+footer {
+  background-color:#263238;
+  color:#fff;
+  margin-top: 50px;
+}
+footer a {
+  color:#fff;
+}
+
+.flash{
+  font-family: 'Raleway', sans-serif;
+  width:50%;
+  margin:  0 auto 0 auto;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  /*height: 80px;*/
+  font-size: 20px;
+}
