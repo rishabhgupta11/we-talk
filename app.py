@@ -7,7 +7,7 @@ from timeago import format
 
 
 app = Flask(__name__)
-app.secret_key='wshofj90792jwfjw903u2m093840298.!rajrajhans!'
+app.secret_key='wshofj90792jwfjw903u2asdasvxasm093840298.!rajrajhans!'
 
 login_manager=LoginManager()
 login_manager.init_app(app)
@@ -94,6 +94,13 @@ def index():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+"""
+@app.route('/about')
+def about():
+    return render_template('about.html')
+"""
+
 
 @app.route('/stream')
 @app.route('/stream/<username>')
