@@ -1,0 +1,41 @@
+.header{
+    background: #000000;
+    font-family: 'Didact Gothic', sans-serif;
+    font-size: 20px;
+}
+
+.nav-item{
+    padding-left: 30px;
+}
+
+.dropdown-menu{
+    background: #000000;
+}
+
+.dropdown-item{
+    color: #ffffff;
+}
+
+.navbar-toggler{
+    border:0;
+}
+
+.navbar-text{
+    padding: 10px 15px 5px 15px;
+    font-size: 15px;
+}
+
+.login-name{
+     background: #006400;
+     padding-left: 0px;
+     border-radius: 25px;
+    -webkit-transition: ease-out 0.5s;
+    -moz-transition: ease-out 0.5s;
+    -ms-transition: ease-out 0.5s;
+    -o-transition: ease-out 0.5s;
+    transition: ease-out 0.5s;
+}
+
+.login-name:hover{
+     background: #009700;
+}

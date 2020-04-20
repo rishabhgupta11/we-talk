@@ -1,5 +1,5 @@
-# We-Talk
-We-Talk is a social network built from ground up mainly using Python's Flask framework. 
+# wetalk
+Wetalk is a social network built from ground up mainly using Python's Flask framework. 
 The project is deployed live on [wetalk.rajrajhans.com](http://wetalk.rajrajhans.com/home)
 
 ## Aim of the project
