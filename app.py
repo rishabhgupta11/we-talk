@@ -34,6 +34,11 @@ def after_request(response):
     g.db.close()
     return response
 
+@app.route('/like', methods=('POST'))
+def likepost():
+	post = post.self()
+	#TODO - add database object
+
 @app.route('/register', methods=('GET', 'POST'))
 def register():
     form=forms.RegisterForm()
