@@ -3,12 +3,17 @@ from models import User
 from wtforms import StringField, PasswordField, TextAreaField
 from wtforms.validators import DataRequired, Regexp, ValidationError, Email, Length, EqualTo
 
+
 def name_exists(form, field):
     if User.select().where(User.username==field.data).exists():
         raise ValidationError("User already exists")
+
+
 def email_exists(form, field):
     if User.select().where(User.email==field.data).exists():
         raise ValidationError("User already exists")
+
+
 class RegisterForm(Form):
     name= StringField(
         'Name',
@@ -51,6 +56,7 @@ class RegisterForm(Form):
         ]
     )
 
+
 class LoginForm(Form):
     email=StringField(
         'Email',
@@ -63,6 +69,7 @@ class LoginForm(Form):
             DataRequired()
         ]
     )
+
 
 class PostForm(Form):
     content = TextAreaField("What's happening?", validators=[DataRequired()])
