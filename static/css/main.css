@@ -220,3 +220,18 @@ textarea{
     width: 100%;
   }
 }
+
+.shadow {
+  -moz-box-shadow:    inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #000000;
+  box-shadow:         inset 0 0 10px #000000;
+}
+
+table {
+  table-layout: fixed;
+}
+
+.box {
+  margin: 0 1.5em 0 1.5em;
+}
+
