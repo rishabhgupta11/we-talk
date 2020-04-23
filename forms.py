@@ -1,6 +1,7 @@
 from flask_wtf import Form
 from models import User
-from wtforms import StringField, PasswordField, TextAreaField
+from wtforms import StringField, PasswordField, TextAreaField, FileField
+from flask_wtf.file import FileAllowed
 from wtforms.validators import DataRequired, Regexp, ValidationError, Email, Length, EqualTo
 
 
@@ -70,6 +71,17 @@ class LoginForm(Form):
         ]
     )
 
-
 class PostForm(Form):
-    content = TextAreaField("What's happening?", validators=[DataRequired()])
+    content = TextAreaField(
+        "What's happening?",
+        validators=[
+            DataRequired()
+        ]
+    )
+    image=FileField(
+        'Image',
+        validators=[
+            FileAllowed(['jpg', 'jpeg', 'png'], 'Images Only!')
+        ],
+        default=None
+    )
