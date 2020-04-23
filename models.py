@@ -40,14 +40,13 @@ class User(UserMixin, Model):
         order_by = ('-joined_at',)
 
     def get_posts(self):
-        return Post.select().where(Post.user == self)
+        return Post.select().where(Post.user == self).order_by(Post.timestamp.desc())
 
     def get_stream(self):
         return Post.select().where(
-            (Post.user << self.following()) |  #all posts from people Im following
-            (Post.user == self) #OR my own posts
-
-        )
+            (Post.user << self.following()) |  # all posts from people Im following
+            (Post.user == self)  # OR my own posts
+        ).order_by(Post.timestamp.desc())
 
     # a join on to_user removes the users who are not following any users from the result table
     # a join on from_user removes the users who are not following anyone from the list
@@ -106,6 +105,9 @@ class Post(Model):
         related_name='posts'
     )
     content = TextField()
+    image = BlobField(null=True)
+    imageThere = BooleanField(default=0)
+    numLikes = IntegerField(default=0)
 
     def getLikes(self):
         """returns list of users who liked the post"""
@@ -143,5 +145,5 @@ class Likes(Model):
 
 def initialize():
     DATABASE_proxy.connection()
-    DATABASE_proxy.create_tables([User, Post, Relationship], safe=True)
+    DATABASE_proxy.create_tables([User, Post, Relationship, Likes], safe=True)
     DATABASE_proxy.close()
