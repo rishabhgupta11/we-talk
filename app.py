@@ -26,7 +26,7 @@ def load_user(userid):
 def before_request():
     # connect to the database
     g.db = models.DATABASE_proxy
-    g.db.connect()
+    g.db.connection()
     g.user = current_user
 
 
@@ -133,7 +133,7 @@ def stream(username=None, myprofile=None):
             user = current_user
     if username:
         template = 'user_stream.html'
-    return render_template(template, stream=stream, user=user, format=format)
+    return render_template(template, stream=stream, user=user, format=format, isSinglePost=0)
 
 
 @app.route('/img/<int:post_id>')
@@ -149,7 +149,7 @@ def view_post(post_id):
     posts = models.Post.select().where(models.Post.id == post_id)
     if posts.count() == 0:
         abort(0)
-    return render_template('stream.html', stream=posts)
+    return render_template('stream.html', stream=posts, format=format, isSinglePost=1)
 
 
 @app.route('/like/<int:post_id>')
@@ -170,7 +170,7 @@ def like_post(post_id):
         models.Post.id == post.id
     ).execute()
 
-    return redirect(url_for('index'))\
+    return redirect(url_for('index'))
 
 @app.route('/unlike/<int:post_id>')
 @login_required
