@@ -1,20 +1,20 @@
-# wetalk
-Wetalk is a social network built from ground up mainly using Python's Flask framework. 
+# We-Talk
+We-Talk is a social network built from ground up mainly using Python's Flask framework. 
 The project is deployed live on [wetalk.rajrajhans.com](http://wetalk.rajrajhans.com/home)
 
 ## Aim of the project
-The aim of the project was to develop a basic prototype of a social media platform.
+The aim of the project is to develop a basic prototype of a social media platform.
 
 ## Technologies Used
 - Flask, an open source web development framework for Python.
 - Peewee, an open source Object Relational Mapper (ORM) made in Python. It supports SQLite, MySQL and PostgreSQL
 - PosgreSQL and SQLite, as database management systems.
 - Heroku, for deploying the webapp online.
-- Bootstrap, for front end user interface.
+- HTML, CSS and Bootstrap, for front end user interface.
 - Git, as a version control system.
 
 ### Database Schema
-In the spirit of the popular web framework Django, peewee uses declarative model definitions. The idea is that you declare a model class for each table. The model class then defines one or more field attributes which correspond to the table’s columns. For this project, there are just three models:
+In the spirit of the popular web framework Django, Peewee uses declarative model definitions. The idea is that you declare a model class for each table. The model class then defines one or more field attributes which correspond to the table’s columns. For this project, there are just three models:
 #### User
 Represents a user account and stores the username and password, an email address for generating avatars using gravatar, and a datetime field indicating when that account was created, and a boolean field containing whether the User is has admin privilege.
 #### Relationship
