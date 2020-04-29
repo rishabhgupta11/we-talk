@@ -68,16 +68,37 @@
 
             </div>
 
+            <div id="commentButton">
+                <a href="/post/{{post.id}}"
+                       class="likeUnlikeButtonLink"
+                       id="unLikeButtonLink"
+                       data-id="{{post.id}}">
+                        <span class="fa fa-comment"></span>
+                        Comment
+                    </a>
+            </div>
+
             <div id="likeCount">
-                {{post.numLikes}} Likes
+                {{post.numLikes}}<span class="grayedOutText"> Likes</span>
+            </div>
+
+            <div id="commentCount">
+                {{post.numComments}}<span class="grayedOutText"> Comments</span>
             </div>
         </div>
         {% else %}
-            <div id="likeCountLoggedOut">
-                {{post.numLikes}} Likes
+            <div class="loggedOutReactionsWrapper">
+            <div id="likeCount">
+                {{post.numLikes}}<span class="grayedOutText"> Likes</span>
             </div>
+
+            <div id="commentCount">
+                {{post.numComments}}<span class="grayedOutText"> Comments</span>
+            </div>
+        </div>
         {% endif %}
         <hr class="separatingLine">
+        {% if current_user.is_authenticated %}
     <form method="POST" action="" class="form">
         {{ form.hidden_tag() }}
         {% for field in form %}
@@ -90,6 +111,7 @@
         {% endfor %}
         <div class="myCommentButton_container"><button type="submit" id="submit" class="myCommentButton">Comment</button></div>
     </form>
+        {% endif %}
 
     <div class="comment-body">
         <hr class="CommentSeparatingLine">

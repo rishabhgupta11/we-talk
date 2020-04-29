@@ -23,8 +23,21 @@
   transition: all .2s ease-in-out;
 }
 
+.Singlepost-wrap {
+  max-width:800px;
+  background: var(--post-bg);
+  margin: auto;
+  margin-top: 10px;
+  border-radius:10px;
+  padding: 30px;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+  transition: all .2s ease-in-out;
+}
+
 .post-wrap:hover{
-  background-color: #3d3f4a;
+  background-color: #34363f;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
@@ -51,11 +64,13 @@
 
 #followBtn{
   grid-area: followBtn;
+
 }
 
 #followBtn a{
-  color: var(--brand) !important;
+  color: white !important;
   font-weight:normal !important;
+  border-color: var(--brand);
   font-size: 15px;
   margin-left: 5px;
 }
@@ -74,6 +89,10 @@
   font-size: 16px;
 }
 
+.profileLinkClass:hover{
+  color: var(--text);
+}
+
 .post-header-info span {
   color:#657786;
   font-weight:normal;
@@ -87,16 +106,120 @@
   color: #fff;
 }
 
-.post-img-wrap {
-  padding-left: 60px;
+.comment-body {
+  font-weight:normal;
+  margin-top: 5px;
+  font-size: 18px;
+  color: #fff;
 }
+
 .post-img{
-    max-width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 .avatar{
   width: 48px !important;
   height: 48px !important;
+}
+
+#likeCountLoggedOut{
+  color:white;
+  font-family: 'Didact Gothic', sans-serif;
+  margin-left: 10px;
+}
+
+.reactionsWrapper{
+  color:white;
+  font-family: 'Didact Gothic', sans-serif;
+  display: grid;
+  margin-top: 30px;
+  grid-template-columns: 90px 110px 70px 100px;
+  grid-template-areas: "likeButton commentButton likeCount commentCount";
+}
+
+.loggedOutReactionsWrapper{
+  font-family: 'Didact Gothic', sans-serif;
+  display: grid;
+  margin-top: 30px;
+  grid-template-columns: 80px 100px;
+  grid-template-areas: " likeCount commentCount";
+}
+
+#commentCount{
+  grid-area: commentCount;
+  margin-left: 10px;
+  color: white;
+}
+
+#commentButton{
+  grid-area: commentButton;
+}
+
+#likeButton{
+  grid-area: likeButton;
+  color: var(--brand)
+}
+
+#likeCount{
+  grid-area: likeCount;
+  margin-left: 10px;
+  color: white;
+}
+
+.likeUnlikeButtonLink{
+  color: var(--brand);
+  background: #DCDCDC;
+  border-radius: 25px;
+  padding: 10px;
+  transition: all .2s ease-in-out;
+}
+
+.likeUnlikeButtonLink:hover{
+  background: var(--brand);
+  color: white;
+  border-radius: 25px;
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+
+.likeUnlikeButtonLink:link{
+  text-decoration: none;
+}
+
+#likeButtonLink{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.separatingLine{
+  border-color: #5f5f5f;
+  margin: 30px -30px 30px -30px;
+}
+
+.CommentSeparatingLine{
+  border-color: #393939 ;
+  margin: 20px 0;
+}
+
+.myCommentForm{
+  width: 100%;
+}
+
+#comment{
+  width: 100% !important;
+  height: 60px !important;
+}
+
+.grayedOutText{
+  color:rgb(110, 118, 125);
+  margin-right: 3px;
+}
+
+.commentContent{
+  margin-left: 30px;
 }
 
 @media screen and (max-width:430px){
@@ -109,8 +232,37 @@
   .post-body {
     margin-bottom: 30px;
   }
+
+  .comment-body {
+    margin-bottom: 30px;
+  }
   .post-img-wrap {
     padding-left: 0;
   }
-
+  .post-img{
+    width: 80%;
+  }
+  .reactionsWrapper{
+    margin-top: 20px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "likeButton commentButton"
+                          "likeCount commentCount";
+  }
+  #followBtn{
+    margin-left: 10px;
+  }
+  #likeButton{
+    margin: auto;
+    font-size: 15px;
+  }
+  #commentButton{
+    margin: auto;
+    font-size: 15px;
+  }
+  #likeCount{
+    margin: 20px auto 0 auto;
+  }
+  #commentCount{
+    margin: 20px auto 0 auto;
+  }
 }
