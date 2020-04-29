@@ -217,7 +217,7 @@ def unlike_post(post_id):
     return redirect(request.referrer)
 
 
-#methof for follow
+#method for follow
 @app.route('/follow/<username>')
 @login_required
 def follow(username):
