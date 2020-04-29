@@ -13,7 +13,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 login_manager.anonymous_user = models.Anonymous
 
-
+#new loader with error handling
 @login_manager.user_loader
 def load_user(userid):
     try:
@@ -21,7 +21,7 @@ def load_user(userid):
     except models.DoesNotExist:
         return None
 
-
+#app request
 @app.before_request
 def before_request():
     # connect to the database
@@ -29,14 +29,14 @@ def before_request():
     g.db.connection()
     g.user = current_user
 
-
+#after request
 @app.after_request
 def after_request(response):
     # close database connection
     g.db.close()
     return response
 
-
+#added GET method
 @app.route('/register', methods=('GET', 'POST'))
 def register():
     form = forms.RegisterForm()
@@ -52,7 +52,7 @@ def register():
         return redirect(url_for('index'))
     return render_template('register.html', form=form)
 
-
+#added GET method
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = forms.LoginForm()
@@ -78,7 +78,7 @@ def logout():
     flash("Logged out successfully!", "success")
     return redirect(url_for('index'))
 
-
+#added GET method
 @app.route('/new_post', methods=('GET', 'POST'))
 @login_required
 def post():
@@ -98,20 +98,173 @@ def post():
     return render_template('post.html', form=forme)
 
 
+#home reroute
 @app.route('/home')
 def home():
     return render_template('homepage.html')
 
 
+#stream reroute
 @app.route('/')
 def index():
     stream = models.Post.select().order_by(models.Post.timestamp.desc())
     return render_template('stream.html', stream=stream, format=format)
 
 
+#about reroute
 @app.route('/about')
 def about():
     return render_template('about.html')
 
+#stream reroute
+@app.route('/stream')
+@app.route('/stream/<username>')
+def stream(username=None, myprofile=None):
+    template = 'stream.html'
+    if myprofile == 1:
+        pass
+    else:
+        if username and username != current_user.username:
+            try:
+                user = models.User.select().where(models.User.username ** username).get()
+            except:
+                abort(404)
+            else:
+                stream = user.get_posts()
+        else:
+            stream = current_user.get_stream()
+            user = current_user
+    if username:
+        template = 'user_stream.html'
+    return render_template(template, stream=stream, user=user, format=format)
 
 
+@app.route('/img/<int:post_id>')
+def serve_image(post_id):
+    post = models.Post.select().where(models.Post.id == post_id)
+    r = Response(response=post[0].image, status=200, mimetype="image/jpg")
+    r.headers["Content-Type"] = "image/jpg; charset=utf-8"
+    return r
+
+
+@app.route('/post/<int:post_id>', methods=['GET', 'POST'])
+def view_post(post_id):
+    posts = models.Post.select().where(models.Post.id == post_id)
+    numberOfComments = posts[0].numComments
+    comments = models.Comments.select().where(models.Comments.post_id == post_id)
+    form = forms.CommentForm()
+
+    if form.validate_on_submit():
+        models.Comments.create(
+            user_id=g.user._get_current_object(),
+            post_id=post_id,
+            comment=form.comment.data.strip()
+        )
+
+        models.Post.update(
+            numComments=numberOfComments + 1
+        ).where(
+            models.Post.id == post_id
+        ).execute()
+
+        flash("Comment Posted!", "success")
+        return redirect(request.referrer)
+
+    if posts.count() == 0:
+        abort(0)
+    return render_template('singlePost.html', stream=posts, format=format, form=form, comments = comments)
+
+#method added for like
+@app.route('/like/<int:post_id>')
+@login_required
+def like_post(post_id):
+    posts = models.Post.select().where(models.Post.id == post_id)
+    post = posts[0]
+    numberOfLikes = post.numLikes
+
+    models.Likes.create(
+        user_id=g.user._get_current_object(),
+        post_id=post
+    )
+
+    models.Post.update(
+        numLikes=numberOfLikes + 1
+    ).where(
+        models.Post.id == post.id
+    ).execute()
+
+    return redirect(request.referrer)
+
+
+#method added for unlike
+@app.route('/unlike/<int:post_id>')
+@login_required
+def unlike_post(post_id):
+    posts = models.Post.select().where(models.Post.id == post_id)
+    post = posts[0]
+    numberOfLikes = post.numLikes
+
+    models.Likes.get(
+        user_id=g.user._get_current_object(),
+        post_id=post
+    ).delete_instance()
+
+    models.Post.update(
+        numLikes=numberOfLikes - 1
+    ).where(
+        models.Post.id == post.id
+    ).execute()
+    return redirect(request.referrer)
+
+
+#methof for follow
+@app.route('/follow/<username>')
+@login_required
+def follow(username):
+    try:
+        to_user = models.User.get(models.User.username ** username)
+    except models.DoesNotExist:
+        abort(404)
+    else:
+        try:
+            models.Relationship.create(
+                from_user=g.user._get_current_object(),
+                to_user=to_user
+            )
+        except models.IntegrityError:
+            pass
+        else:
+            flash("You're now following @{}!".format(to_user.username), "primary")
+    return redirect(url_for('index'))
+
+
+@app.route('/unfollow/<username>')
+@login_required
+def unfollow(username):
+    try:
+        to_user = models.User.get(models.User.username ** username)
+    except models.DoesNotExist:
+        abort(404)
+    else:
+        try:
+            models.Relationship.get(
+                from_user=g.user._get_current_object(),
+                to_user=to_user
+            ).delete_instance()
+        except models.IntegrityError:
+            pass
+        else:
+            flash("You've unfollowed @{}!".format(to_user.username), "primary")
+    return redirect(url_for('index'))
+
+#404 handler
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html'), 404
+
+
+if __name__ == '__main__':
+    models.initialize()
+    app.run(debug=True)
+    
+    
