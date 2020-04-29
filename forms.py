@@ -87,7 +87,7 @@ class PostForm(Form):
         default=None
     )
 
-
+#comment field on post
 class CommentForm(Form):
     comment = TextAreaField(
         "Add a Comment",

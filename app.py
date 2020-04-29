@@ -13,7 +13,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 login_manager.anonymous_user = models.Anonymous
 
-
+#new loader with error handling
 @login_manager.user_loader
 def load_user(userid):
     try:
@@ -21,7 +21,7 @@ def load_user(userid):
     except models.DoesNotExist:
         return None
 
-
+#app request
 @app.before_request
 def before_request():
     # connect to the database
@@ -29,14 +29,14 @@ def before_request():
     g.db.connection()
     g.user = current_user
 
-
+#after request
 @app.after_request
 def after_request(response):
     # close database connection
     g.db.close()
     return response
 
-
+#added GET method
 @app.route('/register', methods=('GET', 'POST'))
 def register():
     form = forms.RegisterForm()
@@ -52,7 +52,7 @@ def register():
         return redirect(url_for('index'))
     return render_template('register.html', form=form)
 
-
+#added GET method
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = forms.LoginForm()
@@ -78,7 +78,7 @@ def logout():
     flash("Logged out successfully!", "success")
     return redirect(url_for('index'))
 
-
+#added GET method
 @app.route('/new_post', methods=('GET', 'POST'))
 @login_required
 def post():
@@ -98,22 +98,25 @@ def post():
     return render_template('post.html', form=forme)
 
 
+#home reroute
 @app.route('/home')
 def home():
     return render_template('homepage.html')
 
 
+#stream reroute
 @app.route('/')
 def index():
     stream = models.Post.select().order_by(models.Post.timestamp.desc())
     return render_template('stream.html', stream=stream, format=format)
 
 
+#about reroute
 @app.route('/about')
 def about():
     return render_template('about.html')
 
-
+#stream reroute
 @app.route('/stream')
 @app.route('/stream/<username>')
 def stream(username=None, myprofile=None):
@@ -171,7 +174,7 @@ def view_post(post_id):
         abort(0)
     return render_template('singlePost.html', stream=posts, format=format, form=form, comments = comments)
 
-
+#method added for like
 @app.route('/like/<int:post_id>')
 @login_required
 def like_post(post_id):
@@ -193,6 +196,7 @@ def like_post(post_id):
     return redirect(request.referrer)
 
 
+#method added for unlike
 @app.route('/unlike/<int:post_id>')
 @login_required
 def unlike_post(post_id):
@@ -213,6 +217,7 @@ def unlike_post(post_id):
     return redirect(request.referrer)
 
 
+#methof for follow
 @app.route('/follow/<username>')
 @login_required
 def follow(username):
@@ -252,7 +257,7 @@ def unfollow(username):
             flash("You've unfollowed @{}!".format(to_user.username), "primary")
     return redirect(url_for('index'))
 
-
+#404 handler
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'), 404
@@ -261,3 +266,5 @@ def not_found(error):
 if __name__ == '__main__':
     models.initialize()
     app.run(debug=True)
+    
+    
